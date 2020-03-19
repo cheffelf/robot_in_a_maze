@@ -2,7 +2,7 @@ Robot In A Maze: A maze runner simulation
 ===
 
 Goal
-===
+==
 
 This is a basic maze runner simulator based on the elma event loop and process manager:
 https://github.com/klavinslab/elma
@@ -37,8 +37,8 @@ The robot has 5 distance sensors that it can use in planning the next path, alth
 Challenges
 ==
 
-Figuring out the order of the ID's of the sensors took some time. I solved this by centering the robot in a simple rectangle to find the sensors with matching values (2 and 1 would have the same values, 4 and 3 would have the same values, with the robot is oriented at 0 radians), then offseting the initial position of the robot to find the changes in the values being returned. I also oriented the robot at various angles and measured the distance being returned by the sensor to confirm.
-Another challenge was lack of time. I had high hopes for the FindPath state and would like to build in more logic, such as finding intersections when sensors 4 or 3 show large jumps in value, and by using sensors to better center the robot down halls and to pick it's "longest path" to be orthangonal to walls in front of it. At this time FindPath is prone to getting stuck at dead ends, although it will get out of them.
+Figuring out the order of the ID's of the sensors took some time. I solved this by centering the robot in a simple rectangle to find sensors with matching values (2 and 1 would have the same values, 4 and 3 would have the same values, when the robot is oriented at 0 radians), then offseting the initial position of the robot to find the changes in the values being returned. I also oriented the robot at various angles and measured the distance being returned by the sensor to confirm. Another challenge was getting data between states, which in the end I pivoted on and used methods in the states that could be called from the AgentInterface.
+I have several more plans for the FindPath state and would like to build in more logic, such as finding intersections when sensors 4 or 3 show large jumps in value, and by using sensors to better center the robot down halls and to pick its "longest path" to be orthangonal to walls in front of it. At this time FindPath is prone to getting stuck at dead ends, although it will get out of them.
 
 How to run the simulation
 ===
