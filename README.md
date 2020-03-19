@@ -13,7 +13,7 @@ https://github.com/klavinslab/enviro
 
 The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two ways available to it to navigate the maze, that it calls when it gets near an obstacle. The user can click a button in the upper right hand corner of the screen to switch the method the robot will use on the fly. The robot is using a finite state machine and the two methods are represented as states:
 
-- FindPath - the default, will pick a new path based on some basic logic, although not much more intelligent than Random Rotation at this time
+- FindPath - the default, will pick a new path based on some very basic logic
 - Random rotation - this state will randomly pick a new path.
 
 There is also a third state that is the normal driving mode:
