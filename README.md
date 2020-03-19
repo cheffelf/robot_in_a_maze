@@ -19,9 +19,9 @@ The simulation is of a static maze with one exit and a Robot placed in the oppos
 There is also a third state that is the normal driving mode:
 - MovingForward - driving forward at a constant speed
 
- In FindPath the robot does a 360 degree scan of the environment. It picks the longest path available to it based on this scan, ignoring paths that are behind it (relative to the orientation of the robot when it arrived at FindPath). Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving. The FindPath state is a work in progress and in this version is not really that useful in helping the robot escape the maze, although the robot will eventually escape when using either method, after a long time.
+ In FindPath the robot does a 360 degree scan of the environment. It picks the longest path available to it based on this scan, ignoring paths that are behind it (relative to the orientation of the robot when it arrived at FindPath). Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving. In this early version the FindPath state is not especially useful in helping the robot escape the maze, although the robot will eventually escape when using either method, after a long time.
 
-The robot has 5 range sensors that it can use in planning the next path, although at this time FindPath is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
+The robot has 5 range sensors that it can use in planning the next path. At this time FindPath is only using sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented:
 
 ```bash
     NW   N   NE
