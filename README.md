@@ -19,7 +19,7 @@ The simulation is of a static maze with one exit and a Robot placed in the oppos
 There is also a third state that is the normal driving mode:
 - MovingForward - driving forward at a constant speed
 
-The FindPath state is a work in progress and at this early stage is not proving that useful in helping the robot escape the maze, although the robot will eventually escape when using either method, after a long time. In FindPath the robot first does a 360 degree scan of the environment. It picks the longest path available to it based on this scan, ignoring paths that were behind it (relative to the orientation of the robot when it arrived at FindPath). Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving.
+ In FindPath the robot does a 360 degree scan of the environment. It picks the longest path available to it based on this scan, ignoring paths that are behind it (relative to the orientation of the robot when it arrived at FindPath). Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving. The FindPath state is a work in progress and in this version is not really that useful in helping the robot escape the maze, although the robot will eventually escape when using either method, after a long time.
 
 The robot has 5 range sensors that it can use in planning the next path, although at this time FindPath is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
 
@@ -33,12 +33,6 @@ The robot has 5 range sensors that it can use in planning the next path, althoug
      2   0   1
  4  _ \  |  /  _ 3
 ```
-
-Challenges
-==
-
-Figuring out the order of the ID's of the sensors took some time. My solution was to center the robot in a basic rectangle to find sensors with matching values (sensors 2 and 1 would have the same values, 4 and 3 would have the same values), then offset the position of the robot to find the changes between the pairs, to figure out which ID was which. I also oriented the robot at various angles and measured the distance to further confirm I had the right ID's. This was prep work to be able to use the sensors to do things in the FindPath state later, but as time started to run short I was only able to add some basic tests with sensor 0 to FindPath. Another challenge was getting data between states, which I was trying to do for the button. My plan was to do it with channels but couldn't get it working in time so had to pivot and use methods in the states instead, by calling them from the AgentInterface when the button is pressed.
-I have several more plans for the FindPath state and would like to build in more logic, such as finding intersections when sensors 4 or 3 show large, sudden jumps in value, and by using sensors to center the robot when traveling down halls. At this time FindPath is prone to getting stuck at dead ends, although it will get out of them after a few passes. Next steps would be to identify dead ends and avoid them in future plans, possibly by keeping a record or blocking them with large invisible blocks.
 
 How to run the simulation
 ===
@@ -63,11 +57,11 @@ make
 enviro
 ```
 
-This simulation is based on the enviro example program avoiders, found at:
+This simulation is based on the enviro example program avoiders:
 https://github.com/klavinslab/enviro/tree/master/examples/avoiders
 
-
-Future plans
+Challenges
 ==
 
-The additional sensors can be used to better center the robot down halls as well as find intersections where it can take multiple paths. These would be tracked in a way that the robot could have information on where it has already traveled and not repeat those paths. One way to do this might be to designate paths as dead ends and block them from being used in future planning.
+Figuring out the order of the ID's of the sensors took some time. My solution was to center the robot in a basic rectangle to find sensors with matching values (sensors 2 and 1 would have the same values, 4 and 3 would have the same values), then offset the position of the robot to find the changes between the pairs to figure out which ID was which. I also oriented the robot at various angles and measured the distance to further confirm I had the right ID's. This was prep work to be able to use the sensors to do things in the FindPath state later, but as time started to run short I was only able to add some basic tests with sensor 0 to FindPath. Another challenge was getting data between states, which I was trying to do for the button. My plan was to do it with channels but couldn't get it working in time so had to pivot and use methods in the states instead, by calling them from the AgentInterface when the button is pressed.
+I have several more plans for the FindPath state and would like to build in more logic, such as finding intersections when sensors 4 or 3 show large, sudden jumps in value, and by using sensors to center the robot when traveling down halls. At this time FindPath is prone to getting stuck at dead ends, although it will get out of them after a few passes. Next steps would be to identify dead ends and avoid them in future plans, possibly by keeping a record or blocking them with large invisible blocks.
