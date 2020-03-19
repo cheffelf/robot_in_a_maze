@@ -17,9 +17,9 @@ The user can click a button in the upper right hand corner of the screen to swit
 There is also a third state that is the normal driving mode:
 - MovingForward - driving forward at a constant speed
 
-The Test Algorithm is a work in progress but does have a few functions now. It is not especially useful in helping the robot escape the maze at this time, although the robot will escape eventually. In this state the robot will first stop and turn 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it means relative to the orientation of the robot when it arrived at this state. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward, to start driving.
+FindPath is a work in progress but does have a few functions now. It is not especially useful in helping the robot escape the maze at this time, although the robot will escape eventually. In FindPath the robot will first stop and turn 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it means relative to the orientation of the robot when it arrived at FindPath. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving.
 
-The robot has 5 distance sensors that it can use in planning the next path, although at this time the Test algorithm is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
+The robot has 5 distance sensors that it can use in planning the next path, although at this time FindPath is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
 
 ```bash
     NW   N   NE
@@ -35,8 +35,8 @@ The robot has 5 distance sensors that it can use in planning the next path, alth
 Challenges
 ==
 
-Figuring out the order of the ID's of the sensors took some time. I solved this by centering the robot in a simple rectangle to find the sensors with matching values (when oriented at 0 radians, 2 and 1 would have the same values, 4 and 3 would have the same values), then offseting the initial position of the robot to find the changes in the matching pairs. I also oriented the robot at various angles and measured the distance being returned by the sensor to confirm.
-Another challenge was lack of time. I had high hopes for the FindPath state and would like to build in more logic.
+Figuring out the order of the ID's of the sensors took some time. I solved this by centering the robot in a simple rectangle to find the sensors with matching values (2 and 1 would have the same values, 4 and 3 would have the same values, with the robot is oriented at 0 radians), then offseting the initial position of the robot to find the changes in the values being returned. I also oriented the robot at various angles and measured the distance being returned by the sensor to confirm.
+Another challenge was lack of time. I had high hopes for the FindPath state and would like to build in more logic, such as finding intersections when sensors 4 or 3 show large jumps in value, and by using sensors to better center the robot down halls and to pick it's "longest path" to be orthangonal to walls in front of it. At this time FindPath is prone to getting stuck at dead ends, although it will get out of them.
 
 How to install
 ==
@@ -53,8 +53,8 @@ Where $PWD is the directory that has a clone of this repository. In docker image
 ```bash
 esm start
 ```
-You can then navigate to http:://localhost and see the basic esm server with no simulation yet.
-From the docker command line, launch enviro:
+You can then navigate to http://localhost and see the basic esm server with no simulation yet.
+From the docker command line, launch enviro to start the simulation:
 ```bash
 enviro
 ```
