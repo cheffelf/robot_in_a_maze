@@ -125,6 +125,7 @@ namespace {
 
     // The Rotating class is a state that will randomly pick a new direction for the robot
     // It then emits an event to change the state of the robot to MovingForward.
+
     class Rotating : public State, public AgentInterface {
         public:
         void entry(const Event& e) { 
@@ -157,6 +158,8 @@ namespace {
 
     };
 
+    // The Agent Interface for the robot Agent, using a finite state machine
+
     class RobotController : public StateMachine, public AgentInterface {
 
         public:
@@ -177,7 +180,6 @@ namespace {
 
         void init() {
             watch("button_click", [&](Event& e) {
-                //std::cout << e.value() << "\n";
                 find_path.use_rotate();
                 rotating.use_rotate();
                 useRotate = !useRotate;
@@ -199,6 +201,8 @@ namespace {
         bool useRotate = false;
 
     };
+
+    // The robot agent that uses the RobotController agent interface
 
     class Robot : public Agent {
 

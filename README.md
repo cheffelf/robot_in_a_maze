@@ -43,11 +43,15 @@ I have several more plans for the FindPath state and would like to build in more
 How to run the simulation
 ===
 
+Clone this repository to a local directory:
+```bash
+git clone https://github.com/cheffelf/robot_in_a_maze.git
+```
 With docker installed, launch a docker image that has enviro and elma built in:
 ```bash
 docker run -p80:80 -p8765:8765 -v $PWD:/source -it klavins/enviro:v1.6 bash
 ```
-Where $PWD is the directory that has a clone of this repository. In the docker image start esm, which will create a web server.
+Where $PWD is the directory where this repository is located. In the docker image start esm, which will launch a web server:
 
 ```bash
 esm start
