@@ -7,25 +7,30 @@ Goal
 This is a basic maze runner simulator based on the elma event loop and process manager, 
 https://github.com/klavinslab/elma, and the enviro simulator, https://github.com/klavinslab/enviro.
 
-The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two ways available to it to navigate the maze, that it calls when it gets near an obstacle. The robot is using a finite state machine and the two methods are represented as states that it calls when it gets near an obstacle:
+The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two ways available to it to navigate the maze, that it calls when it gets near an obstacle. The robot is using a finite state machine and the two methods are represented as states:
 
-    - FindPath - a test algorithm that is the default
-    - Random rotation - this state will randomly pick a new path.
+- FindPath - a test algorithm that is the default
+- Random rotation - this state will randomly pick a new path.
 
 The user can click a button in the upper right hand corner of the screen to switch the method the robot will use on the fly.
-There is also a third state that is the normal driving mode:
-    - MovingForward - driving forward at a constant speed
 
-The Test Algorithm is a work in progress but does have a few functions now. It is not really that useful in helping the robot escape the maze at this time, although the robot will escape eventually. In this state the robot will first stop and turn 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it is relative to the orientation the robot was in when it arrived at this state. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward, and start driving.
+There is also a third state that is the normal driving mode:
+- MovingForward - driving forward at a constant speed
+
+The Test Algorithm is a work in progress but does have a few functions now. It is not especially useful in helping the robot escape the maze at this time, although the robot will escape eventually. In this state the robot will first stop and turn 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it means relative to the orientation of the robot when it arrived at this state. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward, to start driving.
 
 The robot has 5 distance sensors that it can use in planning the next path, although at this time the Test algorithm is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
+
+```bash
     NW   N   NE
  W  _ \  |  / _ E
- 
+ ```
+
  Which in terms of sensor ID is:
+ ```bash
      2   0   1
  4  _ \  |  /  _ 3
-
+```
 
 Challenges
 ==
