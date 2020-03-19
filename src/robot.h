@@ -11,15 +11,17 @@ namespace {
     using namespace std;
     using namespace enviro;
 
-    // The FindPath state is a work in progress and doesn't yet offer the robot much help in navigating the maze.
-    // It's primary goal is offer more intelligent picking of the next path when navigating the maze. At the time of this writing 
-    // it is only partially done. This is the default method the robot will use next when it hits an obstacle.
+    // The FindPath state is a work in progress but has a few functions.
+    // It's primary goal is offer more intelligent picking of the next path when navigating the maze.
+    // Although at this time it is still in its early stages and doesn't help the robot a whole lot. 
+    // FindPath is the default method the robot will use next when it hits an obstacle. The user can select between FindPath
+    // and Rotating states by clicking a button in the upper right hand corner of the enviro web page.
     //
-    // It will do a 360 degree scan and find the longest available path that isn't a path behind it.
+    // When entering FindPath the robot will do a 360 degree scan and find the longest available path that isn't a path behind it.
     //
     // To do this it starts in scanning mode, does a turn of 2 * PI radians, finds the longest path as seen by sensor<0>
     // (in front of the robot), and records the angle.
-    // It then leaves scanning mode and orients robot towards the new path.
+    // It then leaves scanning mode and orients robot towards the new angle.
     // Then emits an event to change the state of the robot to MovingForward
 
     class FindPath : public State, public AgentInterface {
@@ -102,6 +104,8 @@ namespace {
 
     };
 
+    // a basic class for moving the robot in a forward direction at a static rate
+
     class MovingForward : public State, public AgentInterface {
         public:
         void entry(const Event& e) { clear_label(); }
@@ -119,6 +123,8 @@ namespace {
         double targetAng;
     };
 
+    // The Rotating class is a state that will randomly pick a new direction for the robot
+    // It then emits an event to change the state of the robot to MovingForward.
     class Rotating : public State, public AgentInterface {
         public:
         void entry(const Event& e) { 

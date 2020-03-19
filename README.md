@@ -19,16 +19,16 @@ The simulation is of a static maze with one exit. A Robot is placed in the oppos
 There is also a third state that is the normal driving mode:
 - MovingForward - driving forward at a constant speed
 
-FindPath is a work in progress but does have a few functions now. At this time it is not especially useful in helping the robot escape the maze, although the robot will escape eventually. In FindPath the robot will first stop and turn 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it means relative to the orientation of the robot when it arrived at FindPath. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving.
+The FindPath state is a work in progress but does have a few functions now. At this time it is not especially useful in helping the robot escape the maze, although the robot will escape eventually. In FindPath the robot stops and turns 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, ignoring paths that are behind it. Behind it means relative to the orientation of the robot when it arrived at FindPath. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving.
 
-The robot has 5 distance sensors that it can use in planning the next path, although at this time FindPath is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
+The robot has 5 distance sensors that it can use in planning the next path, although at this time FindPath is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like this:
 
 ```bash
     NW   N   NE
  W  _ \  |  / _ E
  ```
 
- Which in terms of sensor ID is:
+ Which maps to sensor ID's:
  ```bash
      2   0   1
  4  _ \  |  /  _ 3
