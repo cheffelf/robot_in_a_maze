@@ -1,33 +1,37 @@
-ROBOT_IN_A_MAZE: A maze runner simulation
+Robot In A Maze: A maze runner simulation
 ===
 
 Goal
 ===
 
-This is a basic maze runner simulator based on the elma event loop and process manager:
-https://github.com/klavinslab/elma
+This is a basic maze runner simulator based on the elma event loop and process manager, 
+https://github.com/klavinslab/elma, and the enviro simulator, https://github.com/klavinslab/enviro.
 
-and the enviro simulator:
-https://github.com/klavinslab/enviro
+The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two ways available to it to navigate the maze, that it calls when it gets near an obstacle. The robot is using a finite state machine and the two methods are represented as states that it calls when it gets near an obstacle:
 
-The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two methods available to it to navigate the maze. The robot will use one of these methods when it gets near an obstacle:
-    * Test algorithm - the default
-    * Random rotation
+    * FindPath - a test algorithm that is the default
+    * Random rotation - this state will randomly pick a new path.
 
 The user can click a button in the upper right hand corner of the screen to switch the method the robot will use on the fly.
-
-The robot is using a finite state machine with three different modes:
-    * FindPath - it will pick the next path with the Test algorithm
-    * Rotating - it will randomly pick a new path
+There is also a third state that is the normal driving mode:
     * MovingForward - driving forward at a constant speed
 
-The Test Algorithm is a work in progress but does a few functions now. It is not really that useful in helping the robot escape the maze, although the robot will escape eventually. In this state the robot will first stop and do a 360 degree scan of the environment, and pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it means relative to the orientation the robot was in when it arrived at this state. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward.
+The Test Algorithm is a work in progress but does have a few functions now. It is not really that useful in helping the robot escape the maze at this time, although the robot will escape eventually. In this state the robot will first stop and turn 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, assuming that path is not behind it. Behind it is relative to the orientation the robot was in when it arrived at this state. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward, and start driving.
 
-The robot has 5 distance sensors that it can use in planning the next path, although at this time the Test algorithm is only using one, the sensor gathering data directly in front of the robot.
+The robot has 5 distance sensors that it can use in planning the next path, although at this time the Test algorithm is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like:
+    NW   N   NE
+ W  _ \  |  / _ E
+ 
+ Which in terms of sensor ID is:
+     2   0   1
+ 4  _ \  |  /  _ 3
+
 
 Challenges
 ==
 
+Figuring out the order of the ID's of the sensors took some time. I solved this by centering the robot in a simple rectangle to find the sensors with matching values (when oriented at 0 radians, 2 and 1 would have the same values, 4 and 3 would have the same values), then offseting the initial position of the robot to find the changes in the matching pairs. I also oriented the robot at various angles and measured the distance being returned by the sensor to confirm.
+Another challenge was lack of time. I had high hopes for the FindPath state and would like to build in more logic.
 
 How to install
 ==
@@ -35,12 +39,22 @@ How to install
 Dockerhub Images
 ===
 
-To start a docker image that has enviro and elma built in, do
+With docker installed, start a docker image that has enviro and elma built in:
 ```bash
 docker run -p80:80 -p8765:8765 -v $PWD:/source -it klavins/enviro:v1.6 bash
 ```
-in docker image:
+Where $PWD is the directory that has a clone of this repository. In docker image start esm, which will create a web server.
 
 ```bash
 esm start
 ```
+You can then navigate to http:://localhost and see the basic esm server with no simulation yet.
+From the docker command line, launch enviro:
+```bash
+enviro
+```
+
+Future plans
+==
+
+The additional sensors can be used to better center the robot down halls as well as find intersections, places where it can take multiple paths. These would be tracked in a way that the robot could have information on where it has already traveled and not repeat those paths. One way to do this might be to designate paths as dead ends and block them from being used in future planning.
