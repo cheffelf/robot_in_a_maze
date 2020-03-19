@@ -13,13 +13,13 @@ https://github.com/klavinslab/enviro
 
 The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two ways available to it to navigate the maze, that it calls when it gets near an obstacle. The user can click a button in the upper right hand corner of the screen to switch the method the robot will use on the fly. The robot is using a finite state machine and the two methods are represented as states:
 
-- FindPath - a test algorithm that is the default
+- FindPath - the default, will pick a new path based on some basic logic, although not much more intelligent than Random Rotation at this time
 - Random rotation - this state will randomly pick a new path.
 
 There is also a third state that is the normal driving mode:
 - MovingForward - driving forward at a constant speed
 
-The FindPath state is a work in progress but does have a few functions now. At this time it is not especially useful in helping the robot escape the maze, although the robot will escape eventually. In FindPath the robot stops and turns 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, ignoring paths that are behind it. Behind it means relative to the orientation of the robot when it arrived at FindPath. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving.
+The FindPath state is a work in progress but does have a few functions. At this time it is not proving especially useful in helping the robot escape the maze, although the robot will escape eventually when using either method. In FindPath the robot stops and turns 360 degrees to scan the environment. It will then pick the longest path available to it based on this scan, ignoring paths that are behind it. Behind it means relative to the orientation of the robot when it arrived at FindPath. Once a new path is found the robot will rotate to this new orientation and trigger a state change to MovingForward to start driving.
 
 The robot has 5 distance sensors that it can use in planning the next path, although at this time FindPath is only using one, sensor 0, the sensor gathering data directly in front of the robot. If the Robot it pointing North, the 5 sensors are oriented like this:
 
