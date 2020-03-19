@@ -4,8 +4,12 @@ Robot In A Maze: A maze runner simulation
 Goal
 ===
 
-This is a basic maze runner simulator based on the elma event loop and process manager, 
-https://github.com/klavinslab/elma, and the enviro simulator, https://github.com/klavinslab/enviro.
+This is a basic maze runner simulator based on the elma event loop and process manager:
+https://github.com/klavinslab/elma
+and the enviro simulator:
+https://github.com/klavinslab/enviro
+
+This code is based on the example 
 
 The simulation is of a static maze with one exit. A Robot is placed in the opposite corner and has two ways available to it to navigate the maze, that it calls when it gets near an obstacle. The robot is using a finite state machine and the two methods are represented as states:
 
@@ -54,8 +58,9 @@ Where $PWD is the directory that has a clone of this repository. In docker image
 esm start
 ```
 You can then navigate to http://localhost and see the basic esm server with no simulation yet.
-From the docker command line, launch enviro to start the simulation:
+In docker, compile the code and launch enviro to start the simulation:
 ```bash
+make
 enviro
 ```
 
